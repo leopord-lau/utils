@@ -1,7 +1,3 @@
-# utils
-some useful utils function
-
-```ts
 // generate random number in a giving range
 const randomNumber = (min: number | string, max: number | string): number => {
     min = Number(min);
@@ -69,7 +65,7 @@ const genRandomString = (length: number | string): string => {
     const charLengths: number = characters.length;
     let result: string = '';
     for(let i: number = 0; i < length; i ++) {
-        result += characters.charAt(Math.floor(Math.random() * charLengths);
+        result += characters.charAt(Math.floor(Math.random() * charLengths))
     }
     return result;
 }
@@ -570,4 +566,3 @@ const deepCopy = (obj: any, hash: WeakMap<object, any> = new WeakMap()): any => 
     }
     return cloneObj
 }
-```
