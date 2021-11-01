@@ -566,3 +566,32 @@ const deepCopy = (obj: any, hash: WeakMap<object, any> = new WeakMap()): any => 
     }
     return cloneObj
 }
+
+// Determine if a value is an Array
+const isArray = (val: object): boolean => {
+    return Object.prototype.toString.call(val) === '[object Array]';
+}
+
+// Iterate over an Array or an Object invoking a function for each item.
+const forEach = (obj: {(key: string): string} | Array<any>, fn: Function): void => {
+    if (obj === null || typeof obj === 'undefined') {
+        return;
+    }
+    if (typeof obj !== 'object') {
+        obj = [obj];
+    }
+
+    if (isArray(obj)) {
+        // Iterate over array values
+        for (var i = 0, l = (<Array<any>>obj).length; i < l; i++) {
+          fn.call(null, (<Array<any>>obj)[i], i, obj);
+        }
+    } else {
+        // Iterate over object keys
+        for (var key in obj) {
+          if (Object.prototype.hasOwnProperty.call(obj, key)) {
+            fn.call(null, obj[key], key, obj);
+          }
+        }
+    }
+}
