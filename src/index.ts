@@ -610,3 +610,14 @@ const promisify = (fn: Function): Function => {
         })
     }
 }
+// Interpret and default an options object
+type Options = {
+    [key: string]: any
+}
+const getOptions = (defaultOpts: Options, opts?: Options): Options => {
+    const options: any = {};
+    for(const key of Object.keys(defaultOpts)) {
+        options[key] = opts && opts[key] !== null ? opts[key] : defaultOpts[key];
+    }
+    return options;
+}
