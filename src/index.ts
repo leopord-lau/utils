@@ -595,3 +595,18 @@ const forEach = (obj: {(key: string): string} | Array<any>, fn: Function): void 
         }
     }
 }
+
+// change a function into async function
+const promisify = (fn: Function): Function => {
+    return function (...args: any) {
+        return new Promise((resolve, reject) => {
+            args.push((err: any, ...values: any) => {
+                if(err) {
+                    return reject(err);
+                }
+                resolve(values);
+            })
+            Reflect.apply(fn, this, args);
+        })
+    }
+}
