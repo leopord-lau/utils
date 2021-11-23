@@ -621,3 +621,13 @@ const getOptions = (defaultOpts: Options, opts?: Options): Options => {
     }
     return options;
 }
+
+// Determine if a value is a plain Object
+const isPlainObject = (val: any): boolean => {
+    if(Object.prototype.toString.call(val) !== '[object object]') {
+        return false;
+    }
+
+    const prototype = Object.getPrototypeOf(val);
+    return prototype === null || prototype === Object.prototype;
+}
