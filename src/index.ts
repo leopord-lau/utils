@@ -631,3 +631,30 @@ const isPlainObject = (val: any): boolean => {
     const prototype = Object.getPrototypeOf(val);
     return prototype === null || prototype === Object.prototype;
 }
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ */
+type keyMap = {
+    [key: string | number | symbol]: any
+}
+const merge = function(...args: keyMap[]): keyMap {
+    const result: keyMap = {};
+    function assignValue(val: any, key: any): void {
+        if(isPlainObject(result[key]) && isPlainObject(val)) {
+            result[key] = merge(result[key], val);
+        } else if(isPlainObject(val)) {
+            result[key] = merge({}, val);
+        } else if(isArray(val)) {
+            result[key] = val.slice();
+        } else {
+            result[key] = val;
+        }
+    }
+    for(let i: number = 0, len: number = arguments.length; i < len; i++) {
+        forEach(arguments[i], assignValue);
+    }
+
+    return result;
+}
